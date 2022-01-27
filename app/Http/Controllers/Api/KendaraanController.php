@@ -77,7 +77,32 @@ class KendaraanController extends Controller
 
     public function update(Request $request, $id)
     {
-        return $request;
+
+        $data = $request->only([
+
+            "tahun_kendaraan",
+            "warna",
+            "harga",
+            "stock",
+            
+        ]);
+
+        $result = ['status' => 200];
+
+        try {
+            
+            $result['data'] = $this->kendaraanService->update($data, $id);
+
+        } catch (\Exception $e) {
+            
+            $result = [
+                "status" => 500,
+                "msg" => $e->getMessage()
+            ];
+
+        }
+
+        return response()->json($result, $result['status']);
     }
 
 }

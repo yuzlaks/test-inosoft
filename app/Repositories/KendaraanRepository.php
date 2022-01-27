@@ -37,6 +37,22 @@ class KendaraanRepository
 
     }
 
+    public function update($request, $id) : Object
+    {
+        
+        $data = $this->kendaraan::where('_id', $id)->first();
+
+        $data->tahun_kendaraan = $request['tahun_kendaraan'];
+        $data->warna           = $request['warna'];
+        $data->harga           = $request['harga'];
+        $data->stock           = $request['stock'];
+
+        $data->update();
+
+        return $data;
+
+    }
+
     public function destroy($id) : Object
     {
 
