@@ -18,7 +18,7 @@ Route::group(['prefix' => 'auth'],function (){
     
 });
 
-Route::group(['prefix' => 'kendaraan'],function (){
+Route::group(['middleware' => 'api','prefix' => 'kendaraan'],function (){
 
     Route::get('/', [KendaraanController::class, 'index']);
     Route::post('/store', [KendaraanController::class, 'store'])->name('api.store');

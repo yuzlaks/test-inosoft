@@ -13,16 +13,21 @@ class KendaraanController extends Controller
 
     public function __construct(KendaraanService $kendaraanService)
     {
+        $this->middleware('auth:api');
         $this->kendaraanService = $kendaraanService;
     }
 
     public function index()
     {
         
-        $data = $this->kendaraanService->getAll();
-        
+        $data = $this->kendaraanService->getAll();        
         return $data;
 
+    }
+
+    public function store(Request $request)
+    {
+        return $this->kendaraanService->store($request);
     }
 
 }
