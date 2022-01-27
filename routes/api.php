@@ -22,7 +22,7 @@ Route::group(['middleware' => 'api','prefix' => 'kendaraan'],function (){
 
     Route::get('/', [KendaraanController::class, 'index']);
     Route::post('/store', [KendaraanController::class, 'store'])->name('api.store');
-    Route::post('/delete/{id}', [KendaraanController::class, 'destroy'])->name('api.destroy');
-    Route::post('/update/{id}', [KendaraanController::class, 'update'])->name('api.update');
+    Route::delete('/delete/{id}', [KendaraanController::class, 'destroy'])->name('api.destroy');
+    Route::put('/update/{id}', [KendaraanController::class, 'update'])->name('api.update');
 
 });
