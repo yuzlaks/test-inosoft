@@ -27,7 +27,52 @@ class KendaraanController extends Controller
 
     public function store(Request $request)
     {
-        return $this->kendaraanService->store($request);
+        $data = $request->only([
+
+            "tahun_kendaraan",
+            "warna",
+            "harga",
+            "stock",
+            
+        ]);
+
+        $result = ['status' => 201];
+
+        try {
+            
+            $result['data'] = $this->kendaraanService->store($data);
+
+        } catch (\Exception $th) {
+            
+            $result = [
+                'status' => 500,
+                'error'  => $th->getMessage()
+            ];
+
+        }
+
+        return response()->json($result, $result['status']);
+    }
+
+    public function destroy($id)
+    {
+        $result = ['status' => 200];
+
+        try {
+
+            $result['data'] = $this->kendaraanService->destroy($id);
+            
+        } catch (\Exception $e) {
+            
+            $result = [
+                "status" => 500,
+                "msg" => $e->getMessage()
+            ];
+
+        }
+
+        return response()->json($result, $result['status']);
+
     }
 
 }

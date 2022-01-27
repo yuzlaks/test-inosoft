@@ -2,8 +2,8 @@
 
 namespace App\Repositories;
 
+use App\Http\Resources\KendaraanResource;
 use App\Models\KendaraanModel;
-use Illuminate\Http\Request;
 
 class KendaraanRepository
 {
@@ -15,8 +15,37 @@ class KendaraanRepository
         $this->kendaraan = $kendaraan;
     }
 
-    public function store(Request $request)
+    public function getAll() : Object
     {
-        return $request;
+        $data = $this->kendaraan->all();
+        return KendaraanResource::collection($data);
     }
+
+    public function save($request)
+    {
+
+        $data = new $this->kendaraan;
+
+        $data->tahun_kendaraan = $request['tahun_kendaraan'];
+        $data->warna           = $request['warna'];
+        $data->harga           = $request['harga'];
+        $data->stock           = $request['stock'];
+
+        $data->save();
+        
+        return $data->fresh();
+
+    }
+
+    public function destroy($id) : Object
+    {
+
+        $data = $this->kendaraan::findOrFail($id);
+
+        $data->delete();
+
+        return $data;
+        
+    }
+
 }

@@ -17,9 +17,46 @@ class KendaraanService
         $this->kendaraanRepository = $kendaraanRepository;
     }
 
-    public function store($request)
+    public function getAll()
     {
-        return response()->json($request);
+        return $this->kendaraanRepository->getAll();
     }
-    
+
+    public function store($data)
+    {
+        $validator = Validator::make($data, [
+
+            "tahun_kendaraan" => 'required|numeric',
+            "warna"           => 'required|string',
+            "harga"           => 'required|numeric',
+            "stock"           => 'required|numeric',
+
+        ]);
+
+        if ($validator->fails()) {
+
+            throw new InvalidArgumentException($validator->errors()->first());
+        }
+
+        $result = $this->kendaraanRepository->save($data);
+
+        return $result;
+    }
+
+    public function destroy($id) : Object
+    {
+        
+        try {
+            
+            $result = $this->kendaraanRepository->destroy($id);
+
+        } catch (\Exception $th) {
+            
+            throw new InvalidArgumentException("Data id : $id, Not Found");
+
+        }
+
+        return $result;
+
+    }
 }
